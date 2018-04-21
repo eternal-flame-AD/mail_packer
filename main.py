@@ -41,7 +41,15 @@ def send_report(to, origin):
     text = "Your file has been sucessfully forwarded.\r\n"
     text += "Original subject:" + origin + "\r\n"
     text += "Target:" + config.out_email_address + "\r\n"
-    text += "Size: %.2f M" % (os.path.getsize(config.zipname)/1024/1024)
+    text += "Size: %.2f M\r\n" % (os.path.getsize(config.zipname)/1024/1024)
+    text += "Here's a brief list of files forwarded: \r\n"
+    zipfile = ziphandler.ZipHandler(config.zipname, mode="r")
+    for f in zipfile.list_file():
+        text += "\t{0} {1} {2}\r\n".format(f.filename,
+                                           f.file_size,
+                                           f.compress_size)
+    zipfile.close()
+    del zipfile
     email.attach_text(text)
     sender = mailhandler.EmailSender(
         config.smtp_host,
