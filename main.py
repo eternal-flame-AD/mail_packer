@@ -37,7 +37,7 @@ def send_zip(fn):
 def send_report(to, origin):
     email = mailhandler.EmailToSend("Forward report for " + origin,
                                     config.sender,
-                                    config.out_email_address)
+                                    to)
     text = "Your file has been sucessfully forwarded.\r\n"
     text += "Original subject:" + origin + "\r\n"
     text += "Target:" + config.out_email_address
