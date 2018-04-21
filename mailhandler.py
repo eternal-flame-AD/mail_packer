@@ -54,7 +54,6 @@ class EmailGetter():
             else:
                 port = imaplib.IMAP4_PORT
         if ssl:
-            port = imaplib.IMAP4_SSL_PORT
             self.session = imaplib.IMAP4_SSL(host, port)
         else:
             self.session = imaplib.IMAP4(host, port)
