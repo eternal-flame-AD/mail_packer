@@ -20,7 +20,10 @@ class Email_Received():
     def __init__(self, msg):
         self.msg = msg
         self.sender = msg.get("From")
-        self.sender = re.findall(r"<.*>", self.sender)[0][1:-1]
+        try:
+            self.sender = re.findall(r"<.*>", self.sender)[0][1:-1]
+        except IndexError:
+            pass
         self.subject = msg.get("Subject")
         if "=?" in self.subject:
             self.subject, code = email.header.decode_header(self.subject)[0]

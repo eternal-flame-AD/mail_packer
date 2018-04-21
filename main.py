@@ -41,7 +41,7 @@ def send_report(to, origin):
     text = "Your file has been sucessfully forwarded.\r\n"
     text += "Original subject:" + origin + "\r\n"
     text += "Target:" + config.out_email_address + "\r\n"
-    text += "Size: {0:.2}M".format(os.path.getsize(config.zipname)/1024/1024)
+    text += "Size: %.2f M" % (os.path.getsize(config.zipname)/1024/1024)
     email.attach_text(text)
     sender = mailhandler.EmailSender(
         config.smtp_host,
@@ -63,7 +63,7 @@ def main():
     for mail in check_new_mail():
         if mail_valid(mail):
             print("found:", mail.sender, mail.subject)
-            folder = 'mails/' + fileoper.randname() + "/"
+            folder = './mails/' + fileoper.randname() + "/"
             for fn, data in mail.iter_attachment():
                 fileoper.write_file(folder + fn, data)
             zip_file(folder, config.zipname)
