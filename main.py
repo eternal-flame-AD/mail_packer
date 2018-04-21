@@ -40,7 +40,8 @@ def send_report(to, origin):
                                     to)
     text = "Your file has been sucessfully forwarded.\r\n"
     text += "Original subject:" + origin + "\r\n"
-    text += "Target:" + config.out_email_address
+    text += "Target:" + config.out_email_address + "\r\n"
+    text += "Size: {0:.2}M".format(os.path.getsize(config.zipname)/1024/1024)
     email.attach_text(text)
     sender = mailhandler.EmailSender(
         config.smtp_host,
